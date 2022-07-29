@@ -45,7 +45,7 @@ class EntriesEditFragment : Fragment(R.layout.fragment_entries_edit) {
                     binding.tvEmpty.visibility = View.GONE
                     binding.progressBar.visibility = View.VISIBLE
                 } else if (state.entriesDeleted) {
-                    findNavController().navigate(R.id.action_mainFragment_to_statisticsFragment)
+                    findNavController().navigate(R.id.statisticsFragment)
                     viewModel.navigated()
                 } else {
                     binding.progressBar.visibility = View.GONE

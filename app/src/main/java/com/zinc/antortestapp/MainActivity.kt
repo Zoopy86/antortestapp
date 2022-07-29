@@ -1,25 +1,16 @@
 package com.zinc.antortestapp
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.tabs.TabLayout
-import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayoutMediator
+import com.google.android.material.tabs.TabLayout
 import com.zinc.antortestapp.databinding.ActivityMainBinding
-import com.zinc.antortestapp.ui.main.FragmentAdapter
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -37,10 +28,53 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.findNavController()
         setupActionBarWithNavController(navController)
+        setupTabLayout()
+        setupFab()
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        binding.tabLayout.getTabAt(0)?.select()
         return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        binding.tabLayout.getTabAt(0)?.select()
+        super.onBackPressed()
+    }
+
+    private fun setupTabLayout() {
+        val navOptions: NavOptions = NavOptions.Builder()
+            .setLaunchSingleTop(true)
+            .setPopUpTo(navController.graph.startDestinationId, false)
+            .build()
+
+        val tabLayout = binding.tabLayout
+        tabLayout.addTab(tabLayout.newTab().setText("Entries"))
+        tabLayout.addTab(tabLayout.newTab().setText("Entries edit"))
+        tabLayout.addTab(tabLayout.newTab().setText("Statistics"))
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.position?.let { position ->
+                    when (position) {
+                        0 -> navController.navigate(R.id.entriesFragment, null, navOptions)
+                        1 -> navController.navigate(R.id.entriesEditFragment, null, navOptions)
+                        2 -> navController.navigate(R.id.statisticsFragment, null, navOptions)
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
+    }
+
+    private fun setupFab() {
+        binding.fab.setOnClickListener {
+            navController.navigate(R.id.newEntryFragment)
+        }
     }
 
 }
