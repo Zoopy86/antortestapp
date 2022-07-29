@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.zinc.antortestapp.ui.main.MainFragment"
+        android:label="MainFragment">
+        <action
+            android:id="@+id/action_mainFragment_to_entriesFragment"
+            app:destination="@id/entriesFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_entriesEditFragment"
+            app:destination="@id/entriesEditFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_newEntryFragment"
+            app:destination="@id/newEntryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/entriesFragment"
+        android:name="com.zinc.antortestapp.ui.entries.EntryListFragment"
+        android:label="fragment_entries"
+        tools:layout="@layout/fragment_entries" />
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.zinc.antortestapp.ui.statistics.StatisticsFragment"
+        android:label="Statistics"
+        app:popUpTo="@id/mainFragment"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_statistics" />
+    <fragment
+        android:id="@+id/entriesEditFragment"
+        android:name="com.zinc.antortestapp.ui.entries_edit.EntriesEditFragment"
+        android:label="fragment_entries_edit"
+        tools:layout="@layout/fragment_entries_edit" />
+    <fragment
+        android:id="@+id/newEntryFragment"
+        android:name="com.zinc.antortestapp.ui.new_entry.NewEntryFragment"
+        android:label="New Entry"
+        tools:layout="@layout/fragment_new_entry" />
+</navigation>
